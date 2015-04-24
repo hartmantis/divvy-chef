@@ -10,65 +10,61 @@ Divvy Cookbook
 [codeclimate]: https://codeclimate.com/github/RoboticCheese/divvy-chef
 [coveralls]: https://coveralls.io/r/RoboticCheese/divvy-chef
 
-TODO: Enter the cookbook description here.
+A Chef cookbook to install Divvy.
 
 Requirements
 ============
 
-TODO: Describe cookbook dependencies.
+This cookbook currently supports an OS X, App Store-derived installation of
+Divvy.
+
+It offers a recipe-based and a resource-based install. Use of the resource
+requires that you open a `mac_app_store` resource prior in your Chef run.
 
 Usage
 =====
 
-TODO: Describe how to use the cookbook.
+Either add the default recipe to your run_list, or implement the resource in
+a recipe of your own.
 
 Recipes
 =======
 
 ***default***
 
-TODO: Describe each component recipe.
-
-Attributes
-==========
-
-***default***
-
-TODO: Describe any noteworthy attributes.
+Opens the Mac App Store and performs a simple install of the app.
 
 Resources
 =========
 
-***divvy***
+***divvy_app***
 
-TODO: Describe each included resource.
+Used to perform installation of the app.
 
 Syntax:
 
-    divvy 'my_resource' do
-        attribute1 'value1'
-        action :create
+    divvy_app 'default' do
+        action :install
     end
 
 Actions:
 
-| Action  | Description  |
-|---------|--------------|
-| action1 | Do something |
+| Action     | Description     |
+|------------|-----------------|
+| `:install` | Install the app |
 
 Attributes:
 
 | Attribute  | Default        | Description          |
 |------------|----------------|----------------------|
-| attribute1 | `'some_value'` | Do something         |
-| action     | `:create`      | Action(s) to perform |
+| action     | `:install`     | Action(s) to perform |
 
 Providers
 =========
 
-TODO: Describe each included provider
+***Chef::Provider::DivvyApp***
 
-***Chef::Provider::SomeProvider***
+Provider for handling installation of the app.
 
 Contributing
 ============

@@ -1,7 +1,7 @@
 # Encoding: UTF-8
 #
 # Cookbook Name:: divvy
-# Recipe:: default
+# Library:: matchers
 #
 # Copyright 2015 Jonathan Hartman
 #
@@ -18,8 +18,10 @@
 # limitations under the License.
 #
 
-include_recipe 'mac-app-store'
+if defined?(ChefSpec)
+  ChefSpec.define_matcher(:divvy_app)
 
-divvy_app 'default' do
-  action :install
+  def install_divvy_app(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:divvy_app, :install, name)
+  end
 end
