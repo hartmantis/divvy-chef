@@ -59,13 +59,6 @@ Attributes:
 |------------|----------------|----------------------|
 | action     | `:install`     | Action(s) to perform |
 
-Providers
-=========
-
-***Chef::Provider::DivvyApp***
-
-Provider for handling installation of the app.
-
 Contributing
 ============
 
