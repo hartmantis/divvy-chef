@@ -6,9 +6,9 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: macosx-10.9
+  - name: macosx
     driver:
-      box: opscode-macosx-10.9
+      box: roboticcheese/macosx
       ssh:
         insert_key: false
       gui: true
