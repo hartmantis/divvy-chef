@@ -12,8 +12,8 @@ describe :provider_mapping do
   context 'Mac OS X' do
     let(:platform) { :mac_os_x }
 
-    it 'uses the MacAppStoreApp app provider' do
-      expect(app_provider).to eq(Chef::Provider::MacAppStoreApp)
+    it 'uses the MacAppStore Divvy app provider' do
+      expect(app_provider).to eq(Chef::Provider::DivvyApp::MacOsX::AppStore)
     end
   end
 

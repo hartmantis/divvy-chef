@@ -1,7 +1,7 @@
 # Encoding: UTF-8
 #
 # Cookbook Name:: divvy
-# Library:: provider_mapping
+# Library:: provider_divvy_app_mac_os_x
 #
 # Copyright 2015 Jonathan Hartman
 #
@@ -18,10 +18,18 @@
 # limitations under the License.
 #
 
-require 'chef/dsl'
-require 'chef/platform/provider_mapping'
+require 'chef/provider/lwrp_base'
 require_relative 'provider_divvy_app'
+require_relative 'provider_divvy_app_mac_os_x_app_store'
 
-Chef::Platform.set(platform: :mac_os_x,
-                   resource: :divvy_app,
-                   provider: Chef::Provider::DivvyApp::MacOsX::AppStore)
+class Chef
+  class Provider
+    class DivvyApp < Provider::LWRPBase
+      # An empty parent class for the Divvy for OS X providers.
+      #
+      # @author Jonathan Hartman <j@p4nt5.com>
+      class MacOsX < DivvyApp
+      end
+    end
+  end
+end
