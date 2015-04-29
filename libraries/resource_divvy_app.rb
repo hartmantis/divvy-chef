@@ -23,18 +23,18 @@ class Chef
     # A Chef resource for the Divvy app.
     #
     # @author Jonathan Hartman <j@p4nt5.com>
-    class DivvyApp < MacAppStoreApp
+    class DivvyApp < Resource::LWRPBase
       self.resource_name = :divvy_app
+      actions :install
+      default_action :install
 
       #
-      # Overload the app name with the one for this app.
+      # Attribute for the app's installed status.
       #
-      attribute :app_name, kind_of: String, default: 'Divvy - Window Manager'
-
-      #
-      # Overload the bundle ID with the one for this app.
-      #
-      attribute :bundle_id, kind_of: String, default: 'com.mizage.Divvy'
+      attribute :installed,
+                kind_of: [NilClass, TrueClass, FalseClass],
+                default: nil
+      alias_method :installed?, :installed
     end
   end
 end

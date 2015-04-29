@@ -12,17 +12,43 @@ describe Chef::Resource::DivvyApp do
       exp = :divvy_app
       expect(resource.instance_variable_get(:@resource_name)).to eq(exp)
     end
-  end
 
-  describe '#app_name' do
-    it 'uses the correct app name' do
-      expect(resource.app_name).to eq('Divvy - Window Manager')
+    it 'sets the installed status to nil' do
+      expect(resource.instance_variable_get(:@installed)).to eq(nil)
     end
   end
 
-  describe '#bundle_id' do
-    it 'uses the correct bundle ID' do
-      expect(resource.bundle_id).to eq('com.mizage.Divvy')
+  [:installed, :installed?].each do |m|
+    describe "##{m}" do
+      context 'default unknown installed status' do
+        it 'returns nil' do
+          expect(resource.send(m)).to eq(nil)
+        end
+      end
+
+      context 'app installed' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@installed, true)
+          r
+        end
+
+        it 'returns true' do
+          expect(resource.send(m)).to eq(true)
+        end
+      end
+
+      context 'app not installed' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@installed, false)
+          r
+        end
+
+        it 'returns true' do
+          expect(resource.send(m)).to eq(false)
+        end
+      end
     end
   end
 end
