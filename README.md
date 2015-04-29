@@ -59,6 +59,17 @@ Attributes:
 |------------|----------------|----------------------|
 | action     | `:install`     | Action(s) to perform |
 
+Providers
+=========
+
+***Chef::Provider::DivvyApp::MacOsX::AppStore***
+
+Provider for installing Divvy from the Mac App Store (default for OS X).
+
+***Chef::Provider::DivvyApp::MacOsX::Direct***
+
+Provider to do a direct download and install from the vendor's site. 
+
 Contributing
 ============
 

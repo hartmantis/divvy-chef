@@ -21,6 +21,7 @@
 require 'chef/provider/lwrp_base'
 require_relative 'provider_divvy_app'
 require_relative 'provider_divvy_app_mac_os_x_app_store'
+require_relative 'provider_divvy_app_mac_os_x_direct'
 
 class Chef
   class Provider
