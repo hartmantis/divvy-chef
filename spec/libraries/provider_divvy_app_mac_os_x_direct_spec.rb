@@ -10,9 +10,24 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
 
   describe '#install!' do
     before(:each) do
-      [:execute, :remote_file].each do |m|
+      [:execute_resource, :remote_file_resource, :authorize_app!].each do |m|
         allow_any_instance_of(described_class).to receive(m)
       end
+    end
+
+    it 'sets up the execute resource' do
+      expect_any_instance_of(described_class).to receive(:execute_resource)
+      provider.send(:install!)
+    end
+
+    it 'sets up the remote file resource' do
+      expect_any_instance_of(described_class).to receive(:remote_file_resource)
+      provider.send(:install!)
+    end
+  end
+
+  describe '#execute_resource' do
+    before(:each) do
       allow_any_instance_of(described_class).to receive(:download_path)
         .and_return('/tmp/Divvy.zip')
     end
@@ -23,7 +38,14 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
       expect(p).to receive(:command)
         .with('unzip -d /Applications /tmp/Divvy.zip')
       expect(p).to receive(:action).with(:nothing)
-      p.send(:install!)
+      p.send(:execute_resource)
+    end
+  end
+
+  describe '#remote_file_resource' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:download_path)
+        .and_return('/tmp/Divvy.zip')
     end
 
     it 'downloads the file' do
@@ -33,7 +55,7 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
         .with('http://mizage.com/downloads/Divvy.zip')
       expect(p).to receive(:action).with(:create)
       expect(p).to receive(:notifies).with(:run, 'execute[unzip divvy]')
-      p.send(:install!)
+      p.send(:remote_file_resource)
     end
   end
 
@@ -41,6 +63,12 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
     it 'returns the correct path' do
       expected = "#{Chef::Config[:file_cache_path]}/Divvy.zip"
       expect(provider.send(:download_path)).to eq(expected)
+    end
+  end
+
+  describe '#app_id' do
+    it 'returns the ID for a direct download install' do
+      expect(provider.send(:app_id)).to eq('com.mizage.direct.Divvy')
     end
   end
 end

@@ -38,12 +38,27 @@ class Chef
           # (see DivvyApp#install!)
           #
           def install!
+            execute_resource
+            remote_file_resource
+            super
+          end
+
+          #
+          # Declare an execute resource for extracting the downloaded file.
+          #
+          def execute_resource
             path = download_path
             execute 'unzip divvy' do
               command "unzip -d /Applications #{path}"
               action :nothing
             end
-            remote_file path do
+          end
+
+          #
+          # Declare a remote_file resource for downloading the file.
+          #
+          def remote_file_resource
+            remote_file download_path do
               source URL
               action :create
               notifies :run, 'execute[unzip divvy]'
@@ -57,6 +72,13 @@ class Chef
           #
           def download_path
             ::File.join(Chef::Config[:file_cache_path], ::File.basename(URL))
+          end
+
+          #
+          # (see MacOsx#app_id)
+          #
+          def app_id
+            'com.mizage.direct.Divvy'
           end
         end
       end

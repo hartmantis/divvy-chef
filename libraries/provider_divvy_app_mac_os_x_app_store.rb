@@ -40,6 +40,14 @@ class Chef
               bundle_id 'com.mizage.divvy'
               action :install
             end
+            super
+          end
+
+          #
+          # (see MacOsX#app_id)
+          #
+          def app_id
+            'com.mizage.Divvy'
           end
         end
       end

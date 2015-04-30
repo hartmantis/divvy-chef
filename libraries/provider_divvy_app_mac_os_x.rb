@@ -30,6 +30,37 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class MacOsX < DivvyApp
+        private
+
+        #
+        # Authorize the Divvy app.
+        #
+        # (see DivvyApp#install!)
+        #
+        def install!
+          authorize_app!
+        end
+
+        #
+        # Declare a trusted_app resource and grant Accessibility to the app.
+        #
+        def authorize_app!
+          mac_app_store_trusted_app app_id do
+            action :create
+          end
+        end
+
+        #
+        # Return the ID the Accessibility database needs for this provider.
+        #
+        # @return [String]
+        #
+        # @raise [NotImplementedError] if not overloaded for this provider
+        #
+        def app_id
+          fail(NotImplementedError,
+               "`app_id` method not implemented for #{self.class} provider")
+        end
       end
     end
   end
