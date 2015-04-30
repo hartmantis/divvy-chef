@@ -17,6 +17,14 @@ describe :provider_mapping do
     end
   end
 
+  context 'Windows' do
+    let(:platform) { :windows }
+
+    it 'uses the Windows Divvy app provider' do
+      expect(app_provider).to eq(Chef::Provider::DivvyApp::Windows)
+    end
+  end
+
   context 'Ubuntu' do
     let(:platform) { :ubuntu }
 

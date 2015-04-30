@@ -25,3 +25,6 @@ require_relative 'provider_divvy_app'
 Chef::Platform.set(platform: :mac_os_x,
                    resource: :divvy_app,
                    provider: Chef::Provider::DivvyApp::MacOsX::AppStore)
+Chef::Platform.set(platform: :windows,
+                   resource: :divvy_app,
+                   provider: Chef::Provider::DivvyApp::Windows)

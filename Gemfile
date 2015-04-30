@@ -25,6 +25,7 @@ group :test do
   gem 'test-kitchen'
   gem 'kitchen-localhost'
   gem 'kitchen-vagrant'
+  gem 'winrm-transport'
 end
 
 group :integration do
