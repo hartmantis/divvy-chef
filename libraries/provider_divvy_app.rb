@@ -46,6 +46,9 @@ class Chef
       action :install do
         install!
         new_resource.installed(true)
+        Chef::Log.info(
+          'If you have a Divvy license, don\'t forget to enter it in the app!'
+        )
       end
 
       private
