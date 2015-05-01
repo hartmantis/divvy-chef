@@ -32,7 +32,8 @@ Recipes
 
 ***default***
 
-Opens the Mac App Store and performs a simple install of the app.
+Installs Divvy (from the Mac App Store or a Windows direct download by
+default) and starts it.
 
 Resources
 =========
@@ -44,14 +45,15 @@ Used to perform installation of the app.
 Syntax:
 
     divvy_app 'default' do
-        action :install
+        action [:install, :run]
     end
 
 Actions:
 
-| Action     | Description     |
-|------------|-----------------|
-| `:install` | Install the app |
+| Action     | Description               |
+|------------|---------------------------|
+| `:install` | Install the app (default) |
+| `:run`     | Run the app (default)     |
 
 Attributes:
 
@@ -68,7 +70,12 @@ Provider for installing Divvy from the Mac App Store (default for OS X).
 
 ***Chef::Provider::DivvyApp::MacOsX::Direct***
 
-Provider to do a direct download and install from the vendor's site. 
+Provider to do a direct download and install for OS X from the vendor's site. 
+
+***Chef::Provider::DivvyApp::Windows***
+
+Provider to do a direct download and install from the vendor's site (default
+for Windows).
 
 Contributing
 ============
