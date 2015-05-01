@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include_recipe 'mac-app-store'
+include_recipe 'mac-app-store' if node['platform'] == 'mac_os_x'
 
 divvy_app 'default' do
   action :install
