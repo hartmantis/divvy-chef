@@ -17,16 +17,7 @@ describe 'Divvy app' do
 
   describe package('Divvy'), if: os[:family] == 'windows' do
     it 'is installed' do
-      pending 'SpecInfra ability to search HKCU registry keys'
       expect(subject).to be_installed
-    end
-  end
-
-  # TODO: This test can go away when the one above is no longer pending
-  describe command("(Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\" \
-                   "CurrentVersion\\Uninstall\\Divvy')") do
-    it 'indicates Divvy is installed' do
-      expect(subject.stdout).to match(/DisplayName +: +Divvy/)
     end
   end
 
