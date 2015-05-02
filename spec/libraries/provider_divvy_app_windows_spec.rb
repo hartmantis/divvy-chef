@@ -44,6 +44,8 @@ describe Chef::Provider::DivvyApp::Windows do
       expect(p).to receive(:source)
         .with('http://mizage.com/downloads/InstallDivvy.exe')
       expect(p).to receive(:action).with(:create)
+      expect(p).to receive(:only_if).and_yield
+      expect(File).to receive(:exist?).with(described_class::PATH)
       p.send(:install!)
     end
 

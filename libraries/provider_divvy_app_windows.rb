@@ -55,6 +55,7 @@ class Chef
           remote_file path do
             source URL
             action :create
+            only_if { !::File.exist?(PATH) }
           end
           windows_package 'Divvy' do
             source path
