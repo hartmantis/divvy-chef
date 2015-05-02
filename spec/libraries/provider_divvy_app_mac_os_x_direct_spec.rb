@@ -10,23 +10,23 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
 
   describe '#install!' do
     before(:each) do
-      [:remote_file_resource, :execute_resource, :authorize_app!].each do |m|
+      [:download_package, :install_package, :authorize_app!].each do |m|
         allow_any_instance_of(described_class).to receive(m)
       end
     end
 
     it 'sets up the remote file resource' do
-      expect_any_instance_of(described_class).to receive(:remote_file_resource)
+      expect_any_instance_of(described_class).to receive(:download_package)
       provider.send(:install!)
     end
 
     it 'sets up the execute resource' do
-      expect_any_instance_of(described_class).to receive(:execute_resource)
+      expect_any_instance_of(described_class).to receive(:install_package)
       provider.send(:install!)
     end
   end
 
-  describe '#remote_file_resource' do
+  describe '#download_package' do
     before(:each) do
       allow_any_instance_of(described_class).to receive(:download_path)
         .and_return('/tmp/Divvy.zip')
@@ -40,11 +40,11 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
       expect(p).to receive(:action).with(:create)
       expect(p).to receive(:only_if).and_yield
       expect(File).to receive(:exist?).with('/Applications/Divvy.app')
-      p.send(:remote_file_resource)
+      p.send(:download_package)
     end
   end
 
-  describe '#execute_resource' do
+  describe '#install_package' do
     before(:each) do
       allow_any_instance_of(described_class).to receive(:download_path)
         .and_return('/tmp/Divvy.zip')
@@ -57,7 +57,7 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
         .with('unzip -d /Applications /tmp/Divvy.zip')
       expect(p).to receive(:action).with(:run)
       expect(p).to receive(:creates).with('/Applications/Divvy.app')
-      p.send(:execute_resource)
+      p.send(:install_package)
     end
   end
 

@@ -38,15 +38,15 @@ class Chef
           # (see DivvyApp#install!)
           #
           def install!
-            remote_file_resource
-            execute_resource
+            download_package
+            install_package
             super
           end
 
           #
           # Declare a remote_file resource for downloading the file.
           #
-          def remote_file_resource
+          def download_package
             remote_file download_path do
               source URL
               action :create
@@ -57,7 +57,7 @@ class Chef
           #
           # Declare an execute resource for extracting the downloaded file.
           #
-          def execute_resource
+          def install_package
             path = download_path
             execute 'unzip divvy' do
               command "unzip -d /Applications #{path}"
