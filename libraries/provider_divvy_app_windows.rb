@@ -36,10 +36,6 @@ class Chef
         def start!
           exe = ::File.join(PATH, 'Divvy.exe')
           execute 'run divvy' do
-            # TODO: This command succeeds when Chef is run locally, but Divvy
-            # exits immediately when run remotely from Test Kitchen. Probably
-            # something related to Windows session management that I'll need to
-            # learn more about. :(
             command "powershell -c \"Start-Process '#{exe}'\""
             action :run
             only_if do
@@ -51,12 +47,21 @@ class Chef
         end
 
         def install!
+          download_package
+          install_package
+        end
+
+        def download_package
           path = download_path
           remote_file path do
             source URL
             action :create
             only_if { !::File.exist?(PATH) }
           end
+        end
+
+        def install_package
+          path = download_path
           windows_package 'Divvy' do
             source path
             installer_type :nsis

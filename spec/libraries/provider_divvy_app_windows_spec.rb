@@ -31,9 +31,25 @@ describe Chef::Provider::DivvyApp::Windows do
 
   describe '#install!' do
     before(:each) do
-      [:windows_package, :remote_file].each do |m|
+      [:download_package, :install_package].each do |m|
         allow_any_instance_of(described_class).to receive(m)
       end
+    end
+
+    it 'downloads the package' do
+      expect_any_instance_of(described_class).to receive(:download_package)
+      provider.send(:install!)
+    end
+
+    it 'installs the package' do
+      expect_any_instance_of(described_class).to receive(:install_package)
+      provider.send(:install!)
+    end
+  end
+
+  describe '#download_package' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:remote_file)
       allow_any_instance_of(described_class).to receive(:download_path)
         .and_return('/tmp/Divvy.exe')
     end
@@ -46,7 +62,15 @@ describe Chef::Provider::DivvyApp::Windows do
       expect(p).to receive(:action).with(:create)
       expect(p).to receive(:only_if).and_yield
       expect(File).to receive(:exist?).with(described_class::PATH)
-      p.send(:install!)
+      p.send(:download_package)
+    end
+  end
+
+  describe '#install_package' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:windows_package)
+      allow_any_instance_of(described_class).to receive(:download_path)
+        .and_return('/tmp/Divvy.exe')
     end
 
     it 'runs the installer' do
@@ -55,7 +79,7 @@ describe Chef::Provider::DivvyApp::Windows do
       expect(p).to receive(:source).with('/tmp/Divvy.exe')
       expect(p).to receive(:installer_type).with(:nsis)
       expect(p).to receive(:action).with(:install)
-      p.send(:install!)
+      p.send(:install_package)
     end
   end
 
