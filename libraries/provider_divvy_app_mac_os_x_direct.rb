@@ -38,9 +38,20 @@ class Chef
           # (see DivvyApp#install!)
           #
           def install!
-            execute_resource
             remote_file_resource
+            execute_resource
             super
+          end
+
+          #
+          # Declare a remote_file resource for downloading the file.
+          #
+          def remote_file_resource
+            remote_file download_path do
+              source URL
+              action :create
+              only_if { !::File.exist?(PATH) }
+            end
           end
 
           #
@@ -52,17 +63,6 @@ class Chef
               command "unzip -d /Applications #{path}"
               action :run
               creates PATH
-            end
-          end
-
-          #
-          # Declare a remote_file resource for downloading the file.
-          #
-          def remote_file_resource
-            remote_file download_path do
-              source URL
-              action :create
-              only_if { !::File.exist?(PATH) }
             end
           end
 
