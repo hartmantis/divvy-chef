@@ -6,12 +6,15 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: macosx
+  - name: macosx-10.10
     driver:
-      box: roboticcheese/macosx
+      box: roboticcheese/macosx-10.10
       ssh:
         insert_key: false
       gui: true
+  - name: windows-2012
+    driver:
+      box: roboticcheese/windows-2012
 
 suites:
   - name: default
@@ -21,3 +24,9 @@ suites:
       mac_app_store:
         username: <%= ENV['APPLE_ID_USERNAME'] %>
         password: <%= ENV['APPLE_ID_PASSWORD'] %>
+  - name: mac_direct_download
+    run_list:
+      - recipe[divvy_test::mac_direct_download]
+    attributes:
+    excludes:
+      - windows-2012

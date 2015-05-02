@@ -4,3 +4,11 @@ driver:
 
 platforms:
   - name: macosx
+    driver:
+      name: localhost
+
+suites:
+  - name: mac_direct_download
+    run_list:
+      - recipe[divvy_test::mac_direct_download]
+    attributes:

@@ -1,7 +1,7 @@
 # Encoding: UTF-8
 #
 # Cookbook Name:: divvy
-# Library:: provider_divvy_app_mac_os_x
+# Library:: provider_divvy_app_windows
 #
 # Copyright 2015 Jonathan Hartman
 #
@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-require 'etc'
 require 'chef/provider/lwrp_base'
 require_relative 'provider_divvy_app'
-require_relative 'provider_divvy_app_mac_os_x_app_store'
-require_relative 'provider_divvy_app_mac_os_x_direct'
 
 class Chef
   class Provider
@@ -30,9 +27,9 @@ class Chef
       # An empty parent class for the Divvy for OS X providers.
       #
       # @author Jonathan Hartman <j@p4nt5.com>
-      class MacOsX < DivvyApp
-        # `URL` varies by sub-provider
-        PATH ||= '/Applications/Divvy.app'
+      class Windows < DivvyApp
+        URL ||= 'http://mizage.com/downloads/InstallDivvy.exe'
+        PATH ||= ::File.expand_path('~/AppData/Local/Mizage LLC/Divvy')
 
         private
 
@@ -40,45 +37,57 @@ class Chef
         # (see DivvyApp#start!)
         #
         def start!
-          execute 'start divvy' do
-            command "open #{PATH}"
-            user Etc.getlogin
+          exe = ::File.join(PATH, 'Divvy.exe')
+          execute 'run divvy' do
+            command "powershell -c \"Start-Process '#{exe}'\""
             action :run
             only_if do
-              cmd = 'ps -A -c -o command | grep ^Divvy$'
-              Mixlib::ShellOut.new(cmd).run_command.stdout.empty?
+              cmd = 'Get-Process Divvy -ErrorAction SilentlyContinue'
+              Mixlib::ShellOut.new("powershell -c \"#{cmd}\"").run_command
+                .stdout.empty?
             end
           end
         end
 
         #
-        # Authorize the Divvy app.
-        #
         # (see DivvyApp#install!)
         #
         def install!
-          authorize_app!
+          download_package
+          install_package
         end
 
         #
-        # Declare a trusted_app resource and grant Accessibility to the app.
+        # Download the package file from the remote URL.
         #
-        def authorize_app!
-          mac_app_store_trusted_app app_id do
+        def download_package
+          path = download_path
+          remote_file path do
+            source URL
             action :create
+            only_if { !::File.exist?(PATH) }
           end
         end
 
         #
-        # Return the ID the Accessibility database needs for this provider.
+        # Install the package we just downloaded.
+        #
+        def install_package
+          path = download_path
+          windows_package 'Divvy' do
+            source path
+            installer_type :nsis
+            action :install
+          end
+        end
+
+        #
+        # Construct a path to download the app file to.
         #
         # @return [String]
         #
-        # @raise [NotImplementedError] if not overloaded for this provider
-        #
-        def app_id
-          fail(NotImplementedError,
-               "`app_id` method not implemented for #{self.class} provider")
+        def download_path
+          ::File.join(Chef::Config[:file_cache_path], ::File.basename(URL))
         end
       end
     end

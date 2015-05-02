@@ -21,6 +21,7 @@
 require 'chef/provider/lwrp_base'
 require_relative 'resource_divvy_app'
 require_relative 'provider_divvy_app_mac_os_x'
+require_relative 'provider_divvy_app_windows'
 
 class Chef
   class Provider
@@ -45,9 +46,31 @@ class Chef
       action :install do
         install!
         new_resource.installed(true)
+        Chef::Log.info(
+          'If you have a Divvy license, don\'t forget to enter it in the app!'
+        )
+      end
+
+      #
+      # Start the app.
+      #
+      action :run do
+        start!
+        new_resource.running(true)
       end
 
       private
+
+      #
+      # Start the Divvy app running using whatever command is appropriate for
+      # the current platform.
+      #
+      # @raise [NotImplementedError] if not defined for this provider.
+      #
+      def start!
+        fail(NotImplementedError,
+             "`start` method not implemented for #{self.class} provider")
+      end
 
       #
       # Do the actual app installation.

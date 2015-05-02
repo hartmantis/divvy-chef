@@ -7,15 +7,33 @@ describe 'divvy::default' do
   let(:runner) { ChefSpec::SoloRunner.new(platform) }
   let(:chef_run) { runner.converge(described_recipe) }
 
+  shared_examples_for 'any platform' do
+    it 'installs the Divvy app' do
+      expect(chef_run).to install_divvy_app('default')
+    end
+
+    it 'runs the Divvy app' do
+      expect(chef_run).to run_divvy_app('default')
+    end
+  end
+
   context 'Mac OS X platform' do
     let(:platform) { { platform: 'mac_os_x', version: '10.10' } }
+
+    it_behaves_like 'any platform'
 
     it 'runs the mac-app-store default recipe' do
       expect(chef_run).to include_recipe('mac-app-store')
     end
+  end
 
-    it 'installs the Divvy app' do
-      expect(chef_run).to install_divvy_app('default')
+  context 'Windows 2012 platform' do
+    let(:platform) { { platform: 'windows', version: '2012R2' } }
+
+    it_behaves_like 'any platform'
+
+    it 'does not run the mac-app-store recipe' do
+      expect(chef_run).not_to include_recipe('mac-app-store')
     end
   end
 end
