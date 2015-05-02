@@ -33,6 +33,9 @@ class Chef
 
         private
 
+        #
+        # (see DivvyApp#start!)
+        #
         def start!
           exe = ::File.join(PATH, 'Divvy.exe')
           execute 'run divvy' do
@@ -46,11 +49,17 @@ class Chef
           end
         end
 
+        #
+        # (see DivvyApp#install!)
+        #
         def install!
           download_package
           install_package
         end
 
+        #
+        # Download the package file from the remote URL.
+        #
         def download_package
           path = download_path
           remote_file path do
@@ -60,6 +69,9 @@ class Chef
           end
         end
 
+        #
+        # Install the package we just downloaded.
+        #
         def install_package
           path = download_path
           windows_package 'Divvy' do
