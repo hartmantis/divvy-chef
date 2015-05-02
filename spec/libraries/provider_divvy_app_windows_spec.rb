@@ -8,6 +8,27 @@ describe Chef::Provider::DivvyApp::Windows do
   let(:new_resource) { Chef::Resource::DivvyApp.new(name, nil) }
   let(:provider) { described_class.new(new_resource, nil) }
 
+  describe '#start!' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:execute)
+    end
+
+    it 'starts Divvy via PowerShell' do
+      p = provider
+      allow(File).to receive(:join).with(described_class::PATH, 'Divvy.exe')
+        .and_return('c:/divvy/Divvy.exe')
+      expect(p).to receive(:execute).with('run divvy').and_yield
+      cmd = 'powershell -c "Start-Process \'c:/divvy/Divvy.exe\'"'
+      expect(p).to receive(:command).with(cmd)
+      expect(p).to receive(:action).with(:run)
+      expect(p).to receive(:only_if).and_yield
+      expect(Mixlib::ShellOut).to receive(:new).with(
+        'powershell -c "Get-Process Divvy -ErrorAction SilentlyContinue"'
+      ).and_return(double(run_command: double(stdout: 'test')))
+      p.send(:start!)
+    end
+  end
+
   describe '#install!' do
     before(:each) do
       [:windows_package, :remote_file].each do |m|

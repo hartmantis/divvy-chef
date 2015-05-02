@@ -27,4 +27,18 @@ describe 'Divvy app' do
       expect(subject).to be_directory
     end
   end
+
+  # TODO: This should pass in Windows too, but Specinfra throws a
+  # NotImplementedError.
+  describe process('Divvy'), if: os[:family] == 'darwin' do
+    it 'is running' do
+      expect(subject).to be_running
+    end
+  end
+
+  describe command('Get-Process Divvy'), if: os[:family] == 'windows' do
+    it 'indicates Divvy is running' do
+      expect(subject.exit_status).to eq(0)
+    end
+  end
 end

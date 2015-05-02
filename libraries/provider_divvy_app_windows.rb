@@ -29,8 +29,26 @@ class Chef
       # @author Jonathan Hartman <j@p4nt5.com>
       class Windows < DivvyApp
         URL ||= 'http://mizage.com/downloads/InstallDivvy.exe'
+        PATH ||= ::File.expand_path('~/AppData/Local/Mizage LLC/Divvy')
 
         private
+
+        def start!
+          exe = ::File.join(PATH, 'Divvy.exe')
+          execute 'run divvy' do
+            # TODO: This command succeeds when Chef is run locally, but Divvy
+            # exits immediately when run remotely from Test Kitchen. Probably
+            # something related to Windows session management that I'll need to
+            # learn more about. :(
+            command "powershell -c \"Start-Process '#{exe}'\""
+            action :run
+            only_if do
+              cmd = 'Get-Process Divvy -ErrorAction SilentlyContinue'
+              Mixlib::ShellOut.new("powershell -c \"#{cmd}\"").run_command
+                .stdout.empty?
+            end
+          end
+        end
 
         def install!
           path = download_path

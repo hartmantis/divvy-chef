@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+require 'chef/resource/lwrp_base'
+
 class Chef
   class Resource
     # A Chef resource for the Divvy app.
@@ -25,8 +27,8 @@ class Chef
     # @author Jonathan Hartman <j@p4nt5.com>
     class DivvyApp < Resource::LWRPBase
       self.resource_name = :divvy_app
-      actions :install
-      default_action :install
+      actions :install, :run
+      default_action [:install, :run]
 
       #
       # Attribute for the app's installed status.
@@ -35,6 +37,14 @@ class Chef
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
       alias_method :installed?, :installed
+
+      #
+      # Attribute for the app's running status.
+      #
+      attribute :running,
+                kind_of: [NilClass, TrueClass, FalseClass],
+                default: nil
+      alias_method :running?, :running
     end
   end
 end

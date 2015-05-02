@@ -11,6 +11,10 @@ describe 'divvy::default' do
     it 'installs the Divvy app' do
       expect(chef_run).to install_divvy_app('default')
     end
+
+    it 'runs the Divvy app' do
+      expect(chef_run).to run_divvy_app('default')
+    end
   end
 
   context 'Mac OS X platform' do

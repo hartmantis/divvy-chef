@@ -51,7 +51,26 @@ class Chef
         )
       end
 
+      #
+      # Start the app.
+      #
+      action :run do
+        start!
+        new_resource.running(true)
+      end
+
       private
+
+      #
+      # Start the Divvy app running using whatever command is appropriate for
+      # the current platform.
+      #
+      # @raise [NotImplementedError] if not defined for this provider.
+      #
+      def start!
+        fail(NotImplementedError,
+             "`start` method not implemented for #{self.class} provider")
+      end
 
       #
       # Do the actual app installation.

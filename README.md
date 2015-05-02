@@ -50,16 +50,16 @@ Syntax:
 
 Actions:
 
-| Action     | Description               |
-|------------|---------------------------|
-| `:install` | Install the app (default) |
-| `:run`     | Run the app (default)     |
+| Action     | Description     |
+|------------|-----------------|
+| `:install` | Install the app |
+| `:run`     | Run the app     |
 
 Attributes:
 
-| Attribute  | Default        | Description          |
-|------------|----------------|----------------------|
-| action     | `:install`     | Action(s) to perform |
+| Attribute  | Default            | Description          |
+|------------|--------------------|----------------------|
+| action     | `[:install, :run]` | Action(s) to perform |
 
 Providers
 =========

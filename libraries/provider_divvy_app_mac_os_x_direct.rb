@@ -50,7 +50,8 @@ class Chef
             path = download_path
             execute 'unzip divvy' do
               command "unzip -d /Applications #{path}"
-              action :nothing
+              action :run
+              creates PATH
             end
           end
 
@@ -61,7 +62,7 @@ class Chef
             remote_file download_path do
               source URL
               action :create
-              notifies :run, 'execute[unzip divvy]'
+              only_if { !::File.exist?(PATH) }
             end
           end
 

@@ -8,6 +8,25 @@ describe Chef::Provider::DivvyApp::MacOsX do
   let(:new_resource) { Chef::Resource::DivvyApp.new(name, nil) }
   let(:provider) { described_class.new(new_resource, nil) }
 
+  describe '#start!' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:execute)
+    end
+
+    it 'starts up Divvy for OS X' do
+      p = provider
+      expect(p).to receive(:execute).with('start divvy').and_yield
+      expect(p).to receive(:command).with('open /Applications/Divvy.app')
+      expect(p).to receive(:user).with(Etc.getlogin)
+      expect(p).to receive(:action).with(:run)
+      expect(p).to receive(:only_if).and_yield
+      cmd = 'ps -A -c -o command | grep ^Divvy$'
+      expect(Mixlib::ShellOut).to receive(:new).with(cmd)
+        .and_return(double(run_command: double(stdout: 'test')))
+      p.send(:start!)
+    end
+  end
+
   describe '#install!' do
     before(:each) do
       allow_any_instance_of(described_class).to receive(:authorize_app!)

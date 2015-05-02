@@ -8,4 +8,10 @@ describe 'Divvy app' do
       expect(subject).to be_directory
     end
   end
+
+  describe process('Divvy') do
+    it 'is running' do
+      expect(subject).to be_running
+    end
+  end
 end

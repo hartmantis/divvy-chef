@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+require 'etc'
 require 'chef/provider/lwrp_base'
 require_relative 'provider_divvy_app'
 require_relative 'provider_divvy_app_mac_os_x_app_store'
@@ -30,7 +31,25 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class MacOsX < DivvyApp
+        # `URL` varies by sub-provider
+        PATH ||= '/Applications/Divvy.app'
+
         private
+
+        #
+        # (see DivvyApp#start!)
+        #
+        def start!
+          execute 'start divvy' do
+            command "open #{PATH}"
+            user Etc.getlogin
+            action :run
+            only_if do
+              cmd = 'ps -A -c -o command | grep ^Divvy$'
+              Mixlib::ShellOut.new(cmd).run_command.stdout.empty?
+            end
+          end
+        end
 
         #
         # Authorize the Divvy app.

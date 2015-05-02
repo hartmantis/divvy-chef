@@ -31,6 +31,29 @@ describe Chef::Provider::DivvyApp do
     end
   end
 
+  describe '#action_run' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:start!)
+    end
+
+    it 'calls the child `start!` method' do
+      expect_any_instance_of(described_class).to receive(:start!)
+      provider.action_run
+    end
+
+    it 'sets the resource running status' do
+      p = provider
+      p.action_run
+      expect(p.new_resource.running?).to eq(true)
+    end
+  end
+
+  describe '#start!' do
+    it 'raises an error' do
+      expect { provider.send(:start!) }.to raise_error(NotImplementedError)
+    end
+  end
+
   describe '#install!' do
     it 'raises an error' do
       expect { provider.send(:install!) }.to raise_error(NotImplementedError)

@@ -37,7 +37,8 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
       expect(p).to receive(:execute).with('unzip divvy').and_yield
       expect(p).to receive(:command)
         .with('unzip -d /Applications /tmp/Divvy.zip')
-      expect(p).to receive(:action).with(:nothing)
+      expect(p).to receive(:action).with(:run)
+      expect(p).to receive(:creates).with('/Applications/Divvy.app')
       p.send(:execute_resource)
     end
   end
@@ -54,7 +55,8 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
       expect(p).to receive(:source)
         .with('http://mizage.com/downloads/Divvy.zip')
       expect(p).to receive(:action).with(:create)
-      expect(p).to receive(:notifies).with(:run, 'execute[unzip divvy]')
+      expect(p).to receive(:only_if).and_yield
+      expect(File).to receive(:exist?).with('/Applications/Divvy.app')
       p.send(:remote_file_resource)
     end
   end

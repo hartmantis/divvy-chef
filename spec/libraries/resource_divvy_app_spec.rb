@@ -13,8 +13,22 @@ describe Chef::Resource::DivvyApp do
       expect(resource.instance_variable_get(:@resource_name)).to eq(exp)
     end
 
+    it 'sets the correct supported actions' do
+      expected = [:nothing, :install, :run]
+      expect(resource.instance_variable_get(:@allowed_actions)).to eq(expected)
+    end
+
+    it 'sets the correct default action' do
+      expected = [:install, :run]
+      expect(resource.instance_variable_get(:@action)).to eq(expected)
+    end
+
     it 'sets the installed status to nil' do
       expect(resource.instance_variable_get(:@installed)).to eq(nil)
+    end
+
+    it 'sets the running status to nil' do
+      expect(resource.instance_variable_get(:@running)).to eq(nil)
     end
   end
 
@@ -42,6 +56,40 @@ describe Chef::Resource::DivvyApp do
         let(:resource) do
           r = super()
           r.instance_variable_set(:@installed, false)
+          r
+        end
+
+        it 'returns true' do
+          expect(resource.send(m)).to eq(false)
+        end
+      end
+    end
+  end
+
+  [:running, :running?].each do |m|
+    describe "##{m}" do
+      context 'default unknown running status' do
+        it 'returns nil' do
+          expect(resource.send(m)).to eq(nil)
+        end
+      end
+
+      context 'app running' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@running, true)
+          r
+        end
+
+        it 'returns true' do
+          expect(resource.send(m)).to eq(true)
+        end
+      end
+
+      context 'app not running' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@running, false)
           r
         end
 
