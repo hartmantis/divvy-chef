@@ -10,6 +10,7 @@ long_description 'Installs/Configures Divvy'
 version          '0.1.1'
 
 depends          'mac-app-store', '~> 0.1'
+depends          'macosx_accessibility', '~> 0.1'
 depends          'windows', '~> 1.36'
 
 supports         'mac_os_x'

@@ -41,15 +41,16 @@ describe Chef::Provider::DivvyApp::MacOsX do
   describe '#authorize_app!' do
     before(:each) do
       allow_any_instance_of(described_class)
-        .to receive(:mac_app_store_trusted_app)
+        .to receive(:macosx_accessibility)
       allow_any_instance_of(described_class).to receive(:app_id)
         .and_return('a.b.c')
     end
 
     it 'grants Accessibility access to the app' do
       p = provider
-      expect(p).to receive(:mac_app_store_trusted_app).with('a.b.c').and_yield
-      expect(p).to receive(:action).with(:create)
+      expect(p).to receive(:macosx_accessibility).with('a.b.c').and_yield
+      expect(p).to receive(:items).with(%w(a.b.c))
+      expect(p).to receive(:action).with([:insert, :enable])
       p.send(:authorize_app!)
     end
   end
