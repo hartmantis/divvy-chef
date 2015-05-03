@@ -19,6 +19,7 @@
 #
 
 require 'etc'
+require 'chef/dsl/include_recipe'
 require 'chef/provider/lwrp_base'
 require_relative 'provider_divvy_app'
 require_relative 'provider_divvy_app_mac_os_x_app_store'
@@ -64,8 +65,10 @@ class Chef
         # Declare a trusted_app resource and grant Accessibility to the app.
         #
         def authorize_app!
-          mac_app_store_trusted_app app_id do
-            action :create
+          ai = app_id
+          macosx_accessibility ai do
+            items [ai]
+            action [:insert, :enable]
           end
         end
 
