@@ -14,12 +14,12 @@ describe Chef::Resource::DivvyApp do
     end
 
     it 'sets the correct supported actions' do
-      expected = [:nothing, :install, :run]
+      expected = [:nothing, :install, :start]
       expect(resource.instance_variable_get(:@allowed_actions)).to eq(expected)
     end
 
     it 'sets the correct default action' do
-      expected = [:install, :run]
+      expected = [:install, :start]
       expect(resource.instance_variable_get(:@action)).to eq(expected)
     end
 

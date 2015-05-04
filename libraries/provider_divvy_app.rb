@@ -54,7 +54,7 @@ class Chef
       #
       # Start the app.
       #
-      action :run do
+      action :start do
         start!
         new_resource.running(true)
       end

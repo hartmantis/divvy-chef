@@ -27,8 +27,8 @@ class Chef
     # @author Jonathan Hartman <j@p4nt5.com>
     class DivvyApp < Resource::LWRPBase
       self.resource_name = :divvy_app
-      actions :install, :run
-      default_action [:install, :run]
+      actions :install, :start
+      default_action [:install, :start]
 
       #
       # Attribute for the app's installed status.

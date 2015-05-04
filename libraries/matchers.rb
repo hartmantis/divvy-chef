@@ -21,7 +21,7 @@
 if defined?(ChefSpec)
   ChefSpec.define_matcher(:divvy_app)
 
-  [:install, :run].each do |a|
+  [:install, :start].each do |a|
     define_method("#{a}_divvy_app") do |name|
       ChefSpec::Matchers::ResourceMatcher.new(:divvy_app, a, name)
     end
