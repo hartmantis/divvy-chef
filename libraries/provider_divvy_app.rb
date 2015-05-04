@@ -52,6 +52,14 @@ class Chef
       end
 
       #
+      # Enable the app to start on boot/login.
+      #
+      action :enable do
+        enable!
+        new_resource.enabled(true)
+      end
+
+      #
       # Start the app.
       #
       action :start do
@@ -62,6 +70,17 @@ class Chef
       private
 
       #
+      # Enable the Divvy app using whatever command is appropriate for the
+      # current platform.
+      #
+      # @raise [NotImplementedError] if not defined for this provider.
+      #
+      def enable!
+        fail(NotImplementedError,
+             "`enable!` method not implemented for #{self.class} provider")
+      end
+
+      #
       # Start the Divvy app running using whatever command is appropriate for
       # the current platform.
       #
@@ -69,7 +88,7 @@ class Chef
       #
       def start!
         fail(NotImplementedError,
-             "`start` method not implemented for #{self.class} provider")
+             "`start!` method not implemented for #{self.class} provider")
       end
 
       #

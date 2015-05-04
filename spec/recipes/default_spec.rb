@@ -12,7 +12,11 @@ describe 'divvy::default' do
       expect(chef_run).to install_divvy_app('default')
     end
 
-    it 'runs the Divvy app' do
+    it 'enables the Divvy app' do
+      expect(chef_run).to enable_divvy_app('default')
+    end
+
+    it 'starts the Divvy app' do
       expect(chef_run).to start_divvy_app('default')
     end
   end

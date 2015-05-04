@@ -14,17 +14,21 @@ describe Chef::Resource::DivvyApp do
     end
 
     it 'sets the correct supported actions' do
-      expected = [:nothing, :install, :start]
+      expected = [:nothing, :install, :enable, :start]
       expect(resource.instance_variable_get(:@allowed_actions)).to eq(expected)
     end
 
     it 'sets the correct default action' do
-      expected = [:install, :start]
+      expected = [:install, :enable, :start]
       expect(resource.instance_variable_get(:@action)).to eq(expected)
     end
 
     it 'sets the installed status to nil' do
       expect(resource.instance_variable_get(:@installed)).to eq(nil)
+    end
+
+    it 'sets the enabled status to nil' do
+      expect(resource.instance_variable_get(:@enabled)).to eq(nil)
     end
 
     it 'sets the running status to nil' do
@@ -59,7 +63,41 @@ describe Chef::Resource::DivvyApp do
           r
         end
 
+        it 'returns false' do
+          expect(resource.send(m)).to eq(false)
+        end
+      end
+    end
+  end
+
+  [:enabled, :enabled?].each do |m|
+    describe "##{m}" do
+      context 'default unknown enabled status' do
+        it 'returns nil' do
+          expect(resource.send(m)).to eq(nil)
+        end
+      end
+
+      context 'app enabled' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@enabled, true)
+          r
+        end
+
         it 'returns true' do
+          expect(resource.send(m)).to eq(true)
+        end
+      end
+
+      context 'app disabled' do
+        let(:resource) do
+          r = super()
+          r.instance_variable_set(:@enabled, false)
+          r
+        end
+
+        it 'returns false' do
           expect(resource.send(m)).to eq(false)
         end
       end
@@ -93,7 +131,7 @@ describe Chef::Resource::DivvyApp do
           r
         end
 
-        it 'returns true' do
+        it 'returns false' do
           expect(resource.send(m)).to eq(false)
         end
       end

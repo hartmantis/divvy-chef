@@ -9,6 +9,17 @@ describe 'Divvy app' do
     end
   end
 
+  describe command(
+    'osascript -e \'tell application "System Events" to get the name of the ' \
+    'login item "Divvy"\''
+  ) do
+    it 'indicates Divvy is enabled' do
+      expect(subject.stdout.strip).to eq('Divvy')
+    end
+  end
+
+  # TODO: This should pass in Windows too, but Specinfra throws a
+  # NotImplementedError.
   describe process('Divvy') do
     it 'is running' do
       expect(subject).to be_running

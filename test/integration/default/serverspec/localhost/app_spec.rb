@@ -28,6 +28,23 @@ describe 'Divvy app' do
     end
   end
 
+  describe command(
+    'osascript -e \'tell application "System Events" to get the name of the ' \
+    'login item "Divvy"\''
+  ), if: os[:family] == 'darwin' do
+    it 'indicates Divvy is enabled' do
+      expect(subject.stdout.strip).to eq('Divvy')
+    end
+  end
+
+  describe command(
+    'Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"'
+  ), if: os[:family] == 'windows' do
+    it 'indicates Divvy is enabled' do
+      expect(subject.stdout).to match(/^Divvy +:/)
+    end
+  end
+
   # TODO: This should pass in Windows too, but Specinfra throws a
   # NotImplementedError.
   describe process('Divvy'), if: os[:family] == 'darwin' do
