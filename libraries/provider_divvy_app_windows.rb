@@ -38,8 +38,13 @@ class Chef
         #
         def enable!
           exe = ::File.join(PATH, 'Divvy.exe').gsub('/', '\\')
-          windows_auto_run 'Divvy' do
-            program exe
+          reg = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
+          windows_registry reg do
+            values('WinDivvy' => "\"#{exe}\" -background")
+            action :create
+          end
+          windows_registry 'HKCU\Software\Mizage LLC\Divvy' do
+            values('auto_start' => 'true')
             action :create
           end
         end
