@@ -7,6 +7,7 @@ v?.?.? (????-??-??)
 - Add support for Windows
 - Grant required Accessibility privileges automatically on OS X
 - Add a `:run` action and start Divvy after it's installed
+- Add an `:enable` action to start Divvy on log-in and do it after install
 
 v0.1.0 (2015-04-25)
 -------------------
