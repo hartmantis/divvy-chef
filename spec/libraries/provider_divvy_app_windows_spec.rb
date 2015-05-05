@@ -8,6 +8,22 @@ describe Chef::Provider::DivvyApp::Windows do
   let(:new_resource) { Chef::Resource::DivvyApp.new(name, nil) }
   let(:provider) { described_class.new(new_resource, nil) }
 
+  describe '#enable!' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:windows_auto_run)
+    end
+
+    it 'enables auto-run for Divvy' do
+      p = provider
+      allow(File).to receive(:join).with(described_class::PATH, 'Divvy.exe')
+        .and_return('c:/divvy/Divvy.exe')
+      expect(p).to receive(:windows_auto_run).with('Divvy').and_yield
+      expect(p).to receive(:program).with('c:\divvy\Divvy.exe')
+      expect(p).to receive(:action).with(:create)
+      p.send(:enable!)
+    end
+  end
+
   describe '#start!' do
     before(:each) do
       allow_any_instance_of(described_class).to receive(:execute)

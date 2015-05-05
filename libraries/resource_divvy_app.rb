@@ -27,8 +27,8 @@ class Chef
     # @author Jonathan Hartman <j@p4nt5.com>
     class DivvyApp < Resource::LWRPBase
       self.resource_name = :divvy_app
-      actions :install, :run
-      default_action [:install, :run]
+      actions :install, :enable, :start
+      default_action [:install, :enable, :start]
 
       #
       # Attribute for the app's installed status.
@@ -37,6 +37,14 @@ class Chef
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
       alias_method :installed?, :installed
+
+      #
+      # Attribute for the app's enabled status.
+      #
+      attribute :enabled,
+                kind_of: [NilClass, TrueClass, FalseClass],
+                default: nil
+      alias_method :enabled?, :enabled
 
       #
       # Attribute for the app's running status.

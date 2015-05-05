@@ -38,6 +38,35 @@ class Chef
         private
 
         #
+        # (see DivvyApp#enable!)
+        #
+        def enable!
+          # TODO: This should eventually take the form of applescript and
+          # login_item resources in the mac_os_x cookbook.
+          cmd = "osascript -e 'tell application \"System Events\" to make " \
+                'new login item at end with properties ' \
+                "{name: \"Divvy\", path: \"#{PATH}\", hidden: false}'"
+          enabled_status = enabled?
+          execute 'enable divvy' do
+            command cmd
+            action :run
+            only_if { !enabled_status }
+          end
+        end
+
+        #
+        # Shell out and use AppleScript to check whether the "Divvy" login
+        # item already exists.
+        #
+        # @return [TrueClass, FalseClass]
+        #
+        def enabled?
+          cmd = "osascript -e 'tell application \"System Events\" to get " \
+                "the name of the login item \"Divvy\"'"
+          !Mixlib::ShellOut.new(cmd).run_command.stdout.empty?
+        end
+
+        #
         # (see DivvyApp#start!)
         #
         def start!

@@ -34,6 +34,17 @@ class Chef
         private
 
         #
+        # (see DivvyApp#enable!)
+        #
+        def enable!
+          exe = ::File.join(PATH, 'Divvy.exe').gsub('/', '\\')
+          windows_auto_run 'Divvy' do
+            program exe
+            action :create
+          end
+        end
+
+        #
         # (see DivvyApp#start!)
         #
         def start!

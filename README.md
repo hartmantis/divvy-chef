@@ -33,7 +33,7 @@ Recipes
 ***default***
 
 Installs Divvy (from the Mac App Store or a Windows direct download by
-default) and starts it.
+default), sets it to start on login, and starts it up.
 
 Resources
 =========
@@ -45,21 +45,22 @@ Used to perform installation of the app.
 Syntax:
 
     divvy_app 'default' do
-        action [:install, :run]
+        action [:install, :start]
     end
 
 Actions:
 
-| Action     | Description     |
-|------------|-----------------|
-| `:install` | Install the app |
-| `:run`     | Run the app     |
+| Action     | Description                      |
+|------------|----------------------------------|
+| `:install` | Install the app                  |
+| `:enable`  | Enable the app to start on login |
+| `:start`   | Run the app                      |
 
 Attributes:
 
-| Attribute  | Default            | Description          |
-|------------|--------------------|----------------------|
-| action     | `[:install, :run]` | Action(s) to perform |
+| Attribute  | Default                       | Description          |
+|------------|-------------------------------|----------------------|
+| action     | `[:install, :enable, :start]` | Action(s) to perform |
 
 Providers
 =========

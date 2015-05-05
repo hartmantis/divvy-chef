@@ -27,6 +27,53 @@ describe Chef::Provider::DivvyApp::MacOsX do
     end
   end
 
+  describe '#enable!' do
+    before(:each) do
+      allow_any_instance_of(described_class).to receive(:execute)
+    end
+
+    it 'runs an execute resource' do
+      p = provider
+      expect(p).to receive(:execute).with('enable divvy').and_yield
+      cmd = 'osascript -e \'tell application "System Events" to make new ' \
+            'login item at end with properties {name: "Divvy", ' \
+            'path: "/Applications/Divvy.app", hidden: false}\''
+      expect(p).to receive(:command).with(cmd)
+      expect(p).to receive(:action).with(:run)
+      expect(p).to receive(:only_if).and_yield
+      expect(p).to receive(:enabled?)
+      p.send(:enable!)
+    end
+  end
+
+  describe '#enabled?' do
+    let(:enabled?) { nil }
+    let(:stdout) { enabled? ? 'Divvy' : '' }
+
+    before(:each) do
+      cmd = 'osascript -e \'tell application "System Events" to get the ' \
+            'name of the login item "Divvy"\''
+      allow(Mixlib::ShellOut).to receive(:new).with(cmd)
+        .and_return(double(run_command: double(stdout: stdout)))
+    end
+
+    context 'Divvy not enabled' do
+      let(:enabled?) { false }
+
+      it 'returns false' do
+        expect(provider.send(:enabled?)).to eq(false)
+      end
+    end
+
+    context 'Divvy enabled' do
+      let(:enabled?) { true }
+
+      it 'returns true' do
+        expect(provider.send(:enabled?)).to eq(true)
+      end
+    end
+  end
+
   describe '#install!' do
     before(:each) do
       allow_any_instance_of(described_class).to receive(:authorize_app!)
