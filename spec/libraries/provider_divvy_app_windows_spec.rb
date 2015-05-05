@@ -17,8 +17,15 @@ describe Chef::Provider::DivvyApp::Windows do
       p = provider
       allow(File).to receive(:join).with(described_class::PATH, 'Divvy.exe')
         .and_return('c:/divvy/Divvy.exe')
-      expect(p).to receive(:windows_auto_run).with('Divvy').and_yield
-      expect(p).to receive(:program).with('c:\divvy\Divvy.exe')
+      expect(p).to receive(:windows_registry)
+        .with('HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run')
+        .and_yield
+      expect(p).to receive(:values)
+        .with('WinDivvy' => '"c:\divvy\Divvy.exe" -background')
+      expect(p).to receive(:action).with(:create)
+      expect(p).to receive(:windows_registry)
+        .with('HKCU\\Software\\Mizage LLC\\Divvy').and_yield
+      expect(p).to receive(:values).with('auto_start' => 'true')
       expect(p).to receive(:action).with(:create)
       p.send(:enable!)
     end
