@@ -15,11 +15,13 @@ A Chef cookbook to install Divvy.
 Requirements
 ============
 
-This cookbook currently supports an OS X, App Store-derived installation of
-Divvy.
+This cookbook supports all the current platform and distribution methods
+offered by the folks behind Divvy (an OS X App Store app and direct site
+downloads for both OS X and Windows).
 
-It offers a recipe-based and a resource-based install. Use of the resource
-requires that you open a `mac_app_store` resource prior in your Chef run.
+It offers recipe-based and resource-based installs. A resource-based install
+from the Mac App Store requires an already-open instance of the `mac_app_store`
+resource.
 
 Usage
 =====
