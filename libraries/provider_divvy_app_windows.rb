@@ -37,14 +37,13 @@ class Chef
         # (see DivvyApp#enable!)
         #
         def enable!
-          exe = ::File.join(PATH, 'Divvy.exe').gsub('/', '\\')
-          reg = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
-          windows_registry reg do
-            values('WinDivvy' => "\"#{exe}\" -background")
+          exe = "\"#{::File.join(PATH, 'Divvy.exe').gsub('/', '\\')}\""
+          registry_key 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run' do
+            values(name: 'WinDivvy', type: :string, data: "#{exe} -background")
             action :create
           end
-          windows_registry 'HKCU\Software\Mizage LLC\Divvy' do
-            values('auto_start' => 'true')
+          registry_key 'HKCU\Software\Mizage LLC\Divvy' do
+            values(name: 'auto_start', type: :string, data: 'true')
             action :create
           end
         end
