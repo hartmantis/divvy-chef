@@ -23,6 +23,9 @@ It offers recipe-based and resource-based installs. A resource-based install
 from the Mac App Store requires an already-open instance of the `mac_app_store`
 resource.
 
+On either supported platform, a user must be signed in for the install to
+complete successfully.
+
 Usage
 =====
 
