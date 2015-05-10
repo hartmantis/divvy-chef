@@ -10,22 +10,26 @@ describe Chef::Provider::DivvyApp::Windows do
 
   describe '#enable!' do
     before(:each) do
-      allow_any_instance_of(described_class).to receive(:windows_auto_run)
+      allow_any_instance_of(described_class).to receive(:registry_key)
     end
 
     it 'enables auto-run for Divvy' do
       p = provider
       allow(File).to receive(:join).with(described_class::PATH, 'Divvy.exe')
         .and_return('c:/divvy/Divvy.exe')
-      expect(p).to receive(:windows_registry)
-        .with('HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run')
-        .and_yield
-      expect(p).to receive(:values)
-        .with('WinDivvy' => '"c:\divvy\Divvy.exe" -background')
+      expect(p).to receive(:registry_key)
+        .with('HKCU\Software\Microsoft\Windows\CurrentVersion\Run').and_yield
+      expect(p).to receive(:values).with(
+        name: 'WinDivvy',
+        type: :string,
+        data: '"c:\divvy\Divvy.exe" -background'
+      )
       expect(p).to receive(:action).with(:create)
-      expect(p).to receive(:windows_registry)
-        .with('HKCU\\Software\\Mizage LLC\\Divvy').and_yield
-      expect(p).to receive(:values).with('auto_start' => 'true')
+      expect(p).to receive(:registry_key)
+        .with('HKCU\Software\Mizage LLC\Divvy').and_yield
+      expect(p).to receive(:values).with(
+        name: 'auto_start', type: :string, data: 'true'
+      )
       expect(p).to receive(:action).with(:create)
       p.send(:enable!)
     end
