@@ -1,6 +1,9 @@
 Divvy Cookbook CHANGELOG
 ========================
 
+v?.?.? (????-??-??)
+-------------------
+
 v0.2.0 (2015-05-09)
 -------------------
 - Add support for non-App Store direct downloads for OS X
