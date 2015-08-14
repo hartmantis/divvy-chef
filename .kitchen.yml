@@ -24,9 +24,12 @@ suites:
       mac_app_store:
         username: <%= ENV['APPLE_ID_USERNAME'] %>
         password: <%= ENV['APPLE_ID_PASSWORD'] %>
+    excludes:
+      - macosx-travis
   - name: mac_direct_download
     run_list:
       - recipe[divvy_test::mac_direct_download]
     attributes:
     excludes:
       - windows-2012
+      - windows-appveyor

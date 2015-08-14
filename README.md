@@ -2,11 +2,13 @@ Divvy Cookbook
 ==============
 [![Cookbook Version](https://img.shields.io/cookbook/v/divvy.svg)][cookbook]
 [![Build Status](https://img.shields.io/travis/RoboticCheese/divvy-chef.svg)][travis]
+[![Windows Build Status](https://img.shields.io/appveyor/ci/RoboticCheese/divvy-chef.svg)][appveyor]
 [![Code Climate](https://img.shields.io/codeclimate/github/RoboticCheese/divvy-chef.svg)][codeclimate]
 [![Coverage Status](https://img.shields.io/coveralls/RoboticCheese/divvy-chef.svg)][coveralls]
 
 [cookbook]: https://supermarket.chef.io/cookbooks/divvy
 [travis]: https://travis-ci.org/RoboticCheese/divvy-chef
+[appveyor]: https://ci.appveyor.com/project/RoboticCheese/divvy-chef
 [codeclimate]: https://codeclimate.com/github/RoboticCheese/divvy-chef
 [coveralls]: https://coveralls.io/r/RoboticCheese/divvy-chef
 

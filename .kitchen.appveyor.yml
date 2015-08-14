@@ -3,4 +3,4 @@ driver:
   name: localhost
 
 platforms:
-  - name: macosx-travis
+  - name: windows-appveyor

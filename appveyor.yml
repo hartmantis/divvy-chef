@@ -1,0 +1,15 @@
+branches:
+  only:
+    - master
+
+install:
+  - cinst chefdk
+  - SET PATH=C:\opscode\chefdk\bin;%PATH%
+
+build_script:
+  - chef exec bundle install
+  - copy .kitchen.appveyor.yml .kitchen.local.yml
+
+test_script:
+  - chef exec bundle exec rake
+  - chef exec bundle exec kitchen test -c 2
