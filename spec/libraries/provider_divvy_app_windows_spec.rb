@@ -30,6 +30,7 @@ describe Chef::Provider::DivvyApp::Windows do
       expect(p).to receive(:values).with(
         name: 'auto_start', type: :string, data: 'true'
       )
+      expect(p).to receive(:recursive).with(true)
       expect(p).to receive(:action).with(:create)
       p.send(:enable!)
     end

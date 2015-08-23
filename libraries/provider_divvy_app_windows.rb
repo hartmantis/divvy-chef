@@ -44,6 +44,7 @@ class Chef
           end
           registry_key 'HKCU\Software\Mizage LLC\Divvy' do
             values(name: 'auto_start', type: :string, data: 'true')
+            recursive true
             action :create
           end
         end
