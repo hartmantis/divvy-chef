@@ -6,7 +6,7 @@ branches:
 
 install:
   - curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk
-  - chef exec bundle install --without=development integration
+  - chef exec bundle update
 
 before_script:
   # Pending ENV support in Kitchen's Rake tasks and not just the CLI
