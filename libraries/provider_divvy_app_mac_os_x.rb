@@ -32,6 +32,8 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class MacOsX < DivvyApp
+        include Chef::DSL::IncludeRecipe
+
         # `URL` varies by sub-provider
         PATH ||= '/Applications/Divvy.app'
 
@@ -94,11 +96,13 @@ class Chef
         # Declare a trusted_app resource and grant Accessibility to the app.
         #
         def authorize_app!
+          include_recipe_now 'privacy_services_manager'
           ai = app_id
-          macosx_accessibility ai do
-            items [ai]
-            action [:insert, :enable]
-          end
+          privacy_services_manager "Grant Accessibility to '#{ai}'" do
+            service 'accessibility'
+            applications [ai]
+            admin true
+          end.run_action(:add)
         end
 
         #
