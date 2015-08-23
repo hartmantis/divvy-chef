@@ -9,30 +9,28 @@ describe Chef::Resource::DivvyApp do
 
   describe '#initialize' do
     it 'sets the correct resource name' do
-      exp = :divvy_app
-      expect(resource.instance_variable_get(:@resource_name)).to eq(exp)
+      expect(resource.resource_name).to eq(:divvy_app)
     end
 
     it 'sets the correct supported actions' do
       expected = [:nothing, :install, :enable, :start]
-      expect(resource.instance_variable_get(:@allowed_actions)).to eq(expected)
+      expect(resource.allowed_actions).to eq(expected)
     end
 
     it 'sets the correct default action' do
-      expected = [:install, :enable, :start]
-      expect(resource.instance_variable_get(:@action)).to eq(expected)
+      expect(resource.action).to eq([:install, :enable, :start])
     end
 
     it 'sets the installed status to nil' do
-      expect(resource.instance_variable_get(:@installed)).to eq(nil)
+      expect(resource.installed).to eq(nil)
     end
 
     it 'sets the enabled status to nil' do
-      expect(resource.instance_variable_get(:@enabled)).to eq(nil)
+      expect(resource.enabled).to eq(nil)
     end
 
     it 'sets the running status to nil' do
-      expect(resource.instance_variable_get(:@running)).to eq(nil)
+      expect(resource.running).to eq(nil)
     end
   end
 
