@@ -3,6 +3,7 @@ Divvy Cookbook CHANGELOG
 
 v?.?.? (????-??-??)
 -------------------
+- Fix issue failing to enable service on Windows
 
 v0.2.0 (2015-05-09)
 -------------------

@@ -67,10 +67,4 @@ describe Chef::Provider::DivvyApp::MacOsX::Direct do
       expect(provider.send(:download_path)).to eq(expected)
     end
   end
-
-  describe '#app_id' do
-    it 'returns the ID for a direct download install' do
-      expect(provider.send(:app_id)).to eq('com.mizage.direct.Divvy')
-    end
-  end
 end

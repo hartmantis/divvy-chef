@@ -22,10 +22,4 @@ describe Chef::Provider::DivvyApp::MacOsX::AppStore do
       p.send(:install!)
     end
   end
-
-  describe '#app_id' do
-    it 'returns the ID for an App Store install' do
-      expect(provider.send(:app_id)).to eq('com.mizage.Divvy')
-    end
-  end
 end

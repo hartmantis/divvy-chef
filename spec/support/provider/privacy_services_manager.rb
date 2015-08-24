@@ -4,10 +4,10 @@ require_relative '../../spec_helper'
 
 class Chef
   class Provider
-    # A fake macosx_accessibility provider
+    # A fake privacy_services_manager provider
     #
     # @author Jonathan Hartman <j@p4nt5.com>
-    class MacosxAccessibility < Provider::LWRPBase
+    class PrivacyServicesManager < Provider::LWRPBase
     end
   end
 end

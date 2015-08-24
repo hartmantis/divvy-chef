@@ -74,13 +74,6 @@ class Chef
           def download_path
             ::File.join(Chef::Config[:file_cache_path], ::File.basename(URL))
           end
-
-          #
-          # (see MacOsx#app_id)
-          #
-          def app_id
-            'com.mizage.direct.Divvy'
-          end
         end
       end
     end

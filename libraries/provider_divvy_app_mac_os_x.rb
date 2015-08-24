@@ -32,6 +32,8 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class MacOsX < DivvyApp
+        include Chef::DSL::IncludeRecipe
+
         # `URL` varies by sub-provider
         PATH ||= '/Applications/Divvy.app'
 
@@ -94,23 +96,12 @@ class Chef
         # Declare a trusted_app resource and grant Accessibility to the app.
         #
         def authorize_app!
-          ai = app_id
-          macosx_accessibility ai do
-            items [ai]
-            action [:insert, :enable]
+          include_recipe 'privacy_services_manager'
+          privacy_services_manager "Grant Accessibility to '#{PATH}'" do
+            service 'accessibility'
+            applications [PATH]
+            action :add
           end
-        end
-
-        #
-        # Return the ID the Accessibility database needs for this provider.
-        #
-        # @return [String]
-        #
-        # @raise [NotImplementedError] if not overloaded for this provider
-        #
-        def app_id
-          fail(NotImplementedError,
-               "`app_id` method not implemented for #{self.class} provider")
         end
       end
     end
