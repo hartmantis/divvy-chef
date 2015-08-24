@@ -89,27 +89,17 @@ describe Chef::Provider::DivvyApp::MacOsX do
     before(:each) do
       allow_any_instance_of(described_class)
         .to receive(:privacy_services_manager)
-      allow_any_instance_of(described_class).to receive(:app_id)
-        .and_return('a.b.c')
     end
 
     it 'grants Accessibility access to the app' do
       p = provider
-      expect(p).to receive(:include_recipe_now).with('privacy_services_manager')
+      expect(p).to receive(:include_recipe).with('privacy_services_manager')
       expect(p).to receive(:privacy_services_manager)
-        .with("Grant Accessibility to 'a.b.c'").and_yield
+        .with("Grant Accessibility to '#{described_class::PATH}'").and_yield
       expect(p).to receive(:service).with('accessibility')
-      expect(p).to receive(:applications).with(%w(a.b.c))
-      psm = double
-      expect(p).to receive(:admin).with(true).and_return(psm)
-      expect(psm).to receive(:run_action).with(:add)
+      expect(p).to receive(:applications).with([described_class::PATH])
+      expect(p).to receive(:action).with(:add)
       p.send(:authorize_app!)
-    end
-  end
-
-  describe '#app_id' do
-    it 'raises an error' do
-      expect { provider.send(:app_id) }.to raise_error(NotImplementedError)
     end
   end
 end

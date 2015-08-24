@@ -11,7 +11,6 @@ version          '0.2.1'
 
 depends          'mac-app-store', '~> 1.0'
 depends          'privacy_services_manager', '~> 1.0'
-depends          'now', '~> 0.3'
 depends          'windows', '~> 1.36'
 
 supports         'mac_os_x'

@@ -42,13 +42,6 @@ class Chef
             end
             super
           end
-
-          #
-          # (see MacOsX#app_id)
-          #
-          def app_id
-            'com.mizage.Divvy'
-          end
         end
       end
     end

@@ -96,25 +96,12 @@ class Chef
         # Declare a trusted_app resource and grant Accessibility to the app.
         #
         def authorize_app!
-          include_recipe_now 'privacy_services_manager'
-          ai = app_id
-          privacy_services_manager "Grant Accessibility to '#{ai}'" do
+          include_recipe 'privacy_services_manager'
+          privacy_services_manager "Grant Accessibility to '#{PATH}'" do
             service 'accessibility'
-            applications [ai]
-            admin true
-          end.run_action(:add)
-        end
-
-        #
-        # Return the ID the Accessibility database needs for this provider.
-        #
-        # @return [String]
-        #
-        # @raise [NotImplementedError] if not overloaded for this provider
-        #
-        def app_id
-          fail(NotImplementedError,
-               "`app_id` method not implemented for #{self.class} provider")
+            applications [PATH]
+            action :add
+          end
         end
       end
     end
