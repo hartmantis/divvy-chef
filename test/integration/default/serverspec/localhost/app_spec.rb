@@ -45,14 +45,18 @@ describe 'Divvy app' do
     end
   end
 
-  # TODO: This should pass in Windows too, but Specinfra throws a
-  # NotImplementedError.
-  describe process('Divvy'), if: os[:family] == 'darwin' do
+  # TODO: Using process('Divvy') requires a fix for Specinfra to not try to use
+  # `ps -C` in OS X.
+  describe command(
+    'ps -A -c -o command | grep Divvy'
+  ), if: os[:family] == 'darwin' do
     it 'is running' do
-      expect(subject).to be_running
+      expect(subject.stdout.strip).to eq('Divvy')
     end
   end
 
+  # TODO: The process('Divvy') call should work in Windows too, but Specinfra
+  # throws a NotImplementedError.
   describe command('Get-Process Divvy'), if: os[:family] == 'windows' do
     it 'indicates Divvy is running' do
       expect(subject.exit_status).to eq(0)
