@@ -37,11 +37,11 @@ describe 'Divvy app' do
     end
   end
 
-  describe command(
-    'Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"'
+  describe windows_registry_key(
+    'HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run'
   ), if: os[:family] == 'windows' do
     it 'indicates Divvy is enabled' do
-      expect(subject.stdout).to match(/^WinDivvy +:/)
+      expect(subject).to have_property('WinDivvy')
     end
   end
 
