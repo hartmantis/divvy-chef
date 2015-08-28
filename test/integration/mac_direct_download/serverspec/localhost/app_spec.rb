@@ -18,11 +18,9 @@ describe 'Divvy app' do
     end
   end
 
-  # TODO: Using proces('Divvy') requires a fix for Specinfra to not try to use
-  # `ps -C` in OS X.
-  describe command('ps -A -c -o command | grep Divvy') do
+  describe process('Divvy') do
     it 'is running' do
-      expect(subject.stdout.strip).to eq('Divvy')
+      expect(subject).to be_running
     end
   end
 end
