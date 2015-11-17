@@ -5,7 +5,8 @@ require_relative '../../libraries/resource_divvy_app'
 
 describe Chef::Resource::DivvyApp do
   let(:name) { 'default' }
-  let(:resource) { described_class.new(name, nil) }
+  let(:run_context) { ChefSpec::SoloRunner.new.converge.run_context }
+  let(:resource) { described_class.new(name, run_context) }
 
   describe '#initialize' do
     it 'sets the correct resource name' do
