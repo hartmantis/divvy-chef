@@ -5,8 +5,9 @@ require_relative '../../libraries/provider_divvy_app_windows'
 
 describe Chef::Provider::DivvyApp::Windows do
   let(:name) { 'Some App' }
-  let(:new_resource) { Chef::Resource::DivvyApp.new(name, nil) }
-  let(:provider) { described_class.new(new_resource, nil) }
+  let(:run_context) { ChefSpec::SoloRunner.new.converge.run_context }
+  let(:new_resource) { Chef::Resource::DivvyApp.new(name, run_context) }
+  let(:provider) { described_class.new(new_resource, run_context) }
 
   describe '#enable!' do
     before(:each) do
@@ -113,8 +114,9 @@ describe Chef::Provider::DivvyApp::Windows do
 
   describe '#download_path' do
     it 'returns the correct path' do
-      expected = "#{Chef::Config[:file_cache_path]}/InstallDivvy.exe"
-      expect(provider.send(:download_path)).to eq(expected)
+      expect(provider.send(:download_path)).to eq(
+        "#{Chef::Config[:file_cache_path]}/InstallDivvy.exe"
+      )
     end
   end
 end

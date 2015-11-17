@@ -5,8 +5,9 @@ require_relative '../../libraries/provider_divvy_app_mac_os_x'
 
 describe Chef::Provider::DivvyApp::MacOsX do
   let(:name) { 'Some App' }
-  let(:new_resource) { Chef::Resource::DivvyApp.new(name, nil) }
-  let(:provider) { described_class.new(new_resource, nil) }
+  let(:run_context) { ChefSpec::SoloRunner.new.converge.run_context }
+  let(:new_resource) { Chef::Resource::DivvyApp.new(name, run_context) }
+  let(:provider) { described_class.new(new_resource, run_context) }
 
   describe '#start!' do
     before(:each) do
