@@ -35,7 +35,7 @@ class Chef
         include Chef::DSL::IncludeRecipe
 
         # `URL` varies by sub-provider
-        PATH ||= '/Applications/Divvy.app'
+        PATH ||= '/Applications/Divvy.app'.freeze
 
         private
 

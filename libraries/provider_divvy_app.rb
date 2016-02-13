@@ -76,8 +76,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def enable!
-        fail(NotImplementedError,
-             "`enable!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`enable!` method not implemented for #{self.class} provider")
       end
 
       #
@@ -87,8 +87,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def start!
-        fail(NotImplementedError,
-             "`start!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`start!` method not implemented for #{self.class} provider")
       end
 
       #
@@ -97,8 +97,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def install!
-        fail(NotImplementedError,
-             "`install!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`install!` method not implemented for #{self.class} provider")
       end
     end
   end

@@ -1,6 +1,5 @@
 # Encoding: UTF-8
-#
-# rubocop:disable SingleSpaceBeforeFirstArg
+
 name             'divvy'
 maintainer       'Jonathan Hartman'
 maintainer_email 'j@p4nt5.com'
@@ -15,4 +14,3 @@ depends          'windows', '~> 1.36'
 
 supports         'mac_os_x'
 supports         'windows'
-# rubocop:enable SingleSpaceBeforeFirstArg

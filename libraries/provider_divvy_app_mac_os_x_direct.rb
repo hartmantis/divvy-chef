@@ -30,7 +30,7 @@ class Chef
         #
         # @author Jonathan Hartman <j@p4nt5.com>
         class Direct < MacOsX
-          URL ||= 'http://mizage.com/downloads/Divvy.zip'
+          URL ||= 'http://mizage.com/downloads/Divvy.zip'.freeze
 
           private
 

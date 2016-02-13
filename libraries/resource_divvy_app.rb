@@ -36,7 +36,7 @@ class Chef
       attribute :installed,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :installed?, :installed
+      alias installed? installed
 
       #
       # Attribute for the app's enabled status.
@@ -44,7 +44,7 @@ class Chef
       attribute :enabled,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :enabled?, :enabled
+      alias enabled? enabled
 
       #
       # Attribute for the app's running status.
@@ -52,7 +52,7 @@ class Chef
       attribute :running,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :running?, :running
+      alias running? running
     end
   end
 end

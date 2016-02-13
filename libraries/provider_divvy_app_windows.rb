@@ -28,8 +28,8 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class Windows < DivvyApp
-        URL ||= 'http://mizage.com/downloads/InstallDivvy.exe'
-        PATH ||= ::File.expand_path('~/AppData/Local/Mizage LLC/Divvy')
+        URL ||= 'http://mizage.com/downloads/InstallDivvy.exe'.freeze
+        PATH ||= ::File.expand_path('~/AppData/Local/Mizage LLC/Divvy').freeze
 
         private
 
@@ -60,7 +60,7 @@ class Chef
             only_if do
               cmd = 'Get-Process Divvy -ErrorAction SilentlyContinue'
               Mixlib::ShellOut.new("powershell -c \"#{cmd}\"").run_command
-                .stdout.empty?
+                              .stdout.empty?
             end
           end
         end

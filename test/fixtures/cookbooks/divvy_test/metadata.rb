@@ -1,6 +1,5 @@
 # Encoding: UTF-8
-#
-# rubocop:disable SingleSpaceBeforeFirstArg
+
 name             'divvy_test'
 maintainer       'Jonathan Hartman'
 maintainer_email 'j@p4nt5.com'
@@ -12,4 +11,3 @@ version          '0.0.1'
 depends          'divvy'
 
 supports         'mac_os_x'
-# rubocop:enable SingleSpaceBeforeFirstArg
