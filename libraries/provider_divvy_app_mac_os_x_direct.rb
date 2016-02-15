@@ -3,7 +3,7 @@
 # Cookbook Name:: divvy
 # Library:: provider_divvy_app_mac_os_x_direct
 #
-# Copyright 2015 Jonathan Hartman
+# Copyright 2015-2016, Jonathan Hartman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ class Chef
         #
         # @author Jonathan Hartman <j@p4nt5.com>
         class Direct < MacOsX
-          URL ||= 'http://mizage.com/downloads/Divvy.zip'
+          URL ||= 'http://mizage.com/downloads/Divvy.zip'.freeze
 
           private
 

@@ -3,7 +3,7 @@
 # Cookbook Name:: divvy
 # Library:: divvy_app
 #
-# Copyright 2015 Jonathan Hartman
+# Copyright 2015-2016, Jonathan Hartman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class Chef
       attribute :installed,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :installed?, :installed
+      alias installed? installed
 
       #
       # Attribute for the app's enabled status.
@@ -44,7 +44,7 @@ class Chef
       attribute :enabled,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :enabled?, :enabled
+      alias enabled? enabled
 
       #
       # Attribute for the app's running status.
@@ -52,7 +52,7 @@ class Chef
       attribute :running,
                 kind_of: [NilClass, TrueClass, FalseClass],
                 default: nil
-      alias_method :running?, :running
+      alias running? running
     end
   end
 end

@@ -3,7 +3,7 @@
 # Cookbook Name:: divvy
 # Library:: provider_divvy_app
 #
-# Copyright 2015 Jonathan Hartman
+# Copyright 2015-2016, Jonathan Hartman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -76,8 +76,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def enable!
-        fail(NotImplementedError,
-             "`enable!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`enable!` method not implemented for #{self.class} provider")
       end
 
       #
@@ -87,8 +87,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def start!
-        fail(NotImplementedError,
-             "`start!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`start!` method not implemented for #{self.class} provider")
       end
 
       #
@@ -97,8 +97,8 @@ class Chef
       # @raise [NotImplementedError] if not defined for this provider.
       #
       def install!
-        fail(NotImplementedError,
-             "`install!` method not implemented for #{self.class} provider")
+        raise(NotImplementedError,
+              "`install!` method not implemented for #{self.class} provider")
       end
     end
   end
