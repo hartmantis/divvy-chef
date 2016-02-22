@@ -18,8 +18,7 @@ describe Chef::Provider::DivvyApp::MacOsX::AppStore do
       p = provider
       expect(p).to receive(:mac_app_store_app).with('Divvy - Window Manager')
         .and_yield
-      expect(p).to receive(:bundle_id).with('com.mizage.divvy')
-      expect(p).to receive(:action).with(:install)
+      expect(p).to receive(:bundle_id).with('com.mizage.Divvy')
       p.send(:install!)
     end
   end

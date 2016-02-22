@@ -12,7 +12,7 @@ Divvy Cookbook
 [codeclimate]: https://codeclimate.com/github/RoboticCheese/divvy-chef
 [coveralls]: https://coveralls.io/r/RoboticCheese/divvy-chef
 
-A Chef cookbook to install Divvy.
+A Chef cookbook to install the Divvy desktop manager.
 
 Requirements
 ============
