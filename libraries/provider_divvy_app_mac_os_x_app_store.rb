@@ -37,8 +37,7 @@ class Chef
           #
           def install!
             mac_app_store_app 'Divvy - Window Manager' do
-              bundle_id 'com.mizage.divvy'
-              action :install
+              bundle_id 'com.mizage.Divvy'
             end
             super
           end

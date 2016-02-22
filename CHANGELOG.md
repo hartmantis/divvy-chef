@@ -1,9 +1,10 @@
 Divvy Cookbook CHANGELOG
 ========================
 
-v?.?.? (????-??-??)
--------------------
+Unreleased
+----------
 - Fix issue failing to enable service on Windows
+- Fix incorrect bundle ID for OS X App Store installs
 
 v0.2.0 (2015-05-09)
 -------------------
