@@ -31,6 +31,8 @@ class Chef
         URL ||= 'http://mizage.com/downloads/InstallDivvy.exe'.freeze
         PATH ||= ::File.expand_path('~/AppData/Local/Mizage LLC/Divvy').freeze
 
+        use_inline_resources
+
         private
 
         #

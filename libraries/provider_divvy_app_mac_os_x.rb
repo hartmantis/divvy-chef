@@ -32,6 +32,7 @@ class Chef
       #
       # @author Jonathan Hartman <j@p4nt5.com>
       class MacOsX < DivvyApp
+        use_inline_resources
         include Chef::DSL::IncludeRecipe
 
         # `URL` varies by sub-provider
