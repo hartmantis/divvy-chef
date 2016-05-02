@@ -30,6 +30,8 @@ class Chef
         #
         # @author Jonathan Hartman <j@p4nt5.com>
         class AppStore < MacOsX
+          use_inline_resources
+
           private
 
           #

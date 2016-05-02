@@ -8,6 +8,7 @@ group :development do
   gem 'guard-foodcritic'
   gem 'guard-rspec'
   gem 'guard-kitchen'
+  gem 'listen', '~> 3.0.7'
 end
 
 group :test do

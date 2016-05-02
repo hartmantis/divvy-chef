@@ -32,6 +32,8 @@ class Chef
         class Direct < MacOsX
           URL ||= 'http://mizage.com/downloads/Divvy.zip'.freeze
 
+          use_inline_resources
+
           private
 
           #
