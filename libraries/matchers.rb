@@ -19,11 +19,15 @@
 #
 
 if defined?(ChefSpec)
-  ChefSpec.define_matcher(:divvy_app)
+  {
+    divvy_app: %i(install upgrade enable disable start stop)
+  }.each do |matcher, actions|
+    ChefSpec.define_matcher(matcher)
 
-  [:install, :enable, :start].each do |a|
-    define_method("#{a}_divvy_app") do |name|
-      ChefSpec::Matchers::ResourceMatcher.new(:divvy_app, a, name)
+    actions.each do |action|
+      define_method("#{action}_#{matcher}") do |name|
+        ChefSpec::Matchers::ResourceMatcher.new(matcher, action, name)
+      end
     end
   end
 end

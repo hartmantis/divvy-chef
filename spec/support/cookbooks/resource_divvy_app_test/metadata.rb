@@ -1,11 +1,11 @@
 # Encoding: UTF-8
 
-name 'divvy_test'
+name 'resource_divvy_app_test'
 maintainer 'Jonathan Hartman'
 maintainer_email 'j@p4nt5.com'
 license 'apache2'
-description 'Installs/Configures divvy_test'
-long_description 'Installs/Configures divvy_test'
+description 'Resource test wrapper'
+long_description 'Resource test wrapper'
 version '0.0.1'
 
 depends 'divvy'
