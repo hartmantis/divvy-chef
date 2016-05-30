@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require_relative '../../../../libraries/resource_divvy_app_mac_os_x'
+require_relative '../../../../libraries/helpers_app_mac_os_x'
 
 describe 'resource_divvy_app::mac_os_x::10_10' do
   let(:name) { 'default' }
@@ -18,17 +18,13 @@ describe 'resource_divvy_app::mac_os_x::10_10' do
   let(:converge) { runner.converge('resource_divvy_app_test') }
 
   before(:each) do
+    allow(Kernel).to receive(:load).and_call_original
+    allow(Kernel).to receive(:load)
+      .with(%r{divvy/libraries/helpers_app_mac_os_x\.rb}).and_return(true)
     allow(Etc).to receive(:getlogin).and_return(getlogin)
-    allow(File).to receive(:exist?).and_call_original
-    allow(File).to receive(:exist?).with('/Applications/Divvy.app')
-      .and_return(installed?)
-    allow_any_instance_of(Chef::Resource::DivvyAppMacOsX).to receive(:shell_out)
-      .with("osascript -e 'tell application \"System Events\" to get the " \
-            "name of the login item \"Divvy\"'")
-      .and_return(double(stdout: enabled? ? "stuff\n" : "\n"))
-    allow_any_instance_of(Chef::Resource::DivvyAppMacOsX).to receive(:shell_out)
-      .with('ps -A -c -o command | grep ^Divvy$ || true')
-      .and_return(double(stdout: running? ? "stuff\n" : "\n"))
+    %i(installed? enabled? running?).each do |m|
+      allow(Divvy::Helpers::App::MacOsX).to receive(m).and_return(send(m))
+    end
   end
 
   context 'the :install action' do

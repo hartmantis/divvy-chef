@@ -19,7 +19,7 @@
 #
 
 require 'etc'
-require 'chef/mixin/shell_out'
+require_relative 'helpers_app_mac_os_x'
 require_relative 'resource_divvy_app'
 
 class Chef
@@ -28,8 +28,6 @@ class Chef
     #
     # @author Jonathan Hartman <j@p4nt5.com>
     class DivvyAppMacOsX < DivvyApp
-      include Chef::Mixin::ShellOut
-
       PATH ||= '/Applications/Divvy.app'.freeze
 
       provides :divvy_app, platform_family: 'mac_os_x'
@@ -47,12 +45,9 @@ class Chef
       end
 
       load_current_value do
-        installed(::File.exist?(PATH))
-        cmd = "osascript -e 'tell application \"System Events\" to get " \
-              "the name of the login item \"Divvy\"'"
-        enabled(!shell_out(cmd).stdout.strip.empty?)
-        cmd = 'ps -A -c -o command | grep ^Divvy$ || true'
-        running(!shell_out(cmd).stdout.strip.empty?)
+        installed(Divvy::Helpers::App::MacOsX.installed?)
+        enabled(Divvy::Helpers::App::MacOsX.enabled?)
+        running(Divvy::Helpers::App::MacOsX.running?)
       end
 
       action :install do
