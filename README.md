@@ -52,7 +52,7 @@ Used to perform installation of the app.
 Syntax:
 
     divvy_app 'default' do
-        action [:install, :start]
+      action %i(install enable start)
     end
 
 Actions:
@@ -65,25 +65,9 @@ Actions:
 
 Attributes:
 
-| Attribute  | Default                       | Description          |
-|------------|-------------------------------|----------------------|
-| action     | `[:install, :enable, :start]` | Action(s) to perform |
-
-Providers
-=========
-
-***Chef::Provider::DivvyApp::MacOsX::AppStore***
-
-Provider for installing Divvy from the Mac App Store (default for OS X).
-
-***Chef::Provider::DivvyApp::MacOsX::Direct***
-
-Provider to do a direct download and install for OS X from the vendor's site. 
-
-***Chef::Provider::DivvyApp::Windows***
-
-Provider to do a direct download and install from the vendor's site (default
-for Windows).
+| Attribute  | Default                    | Description          |
+|------------|----------------------------|----------------------|
+| action     | `%i(install enable start)` | Action(s) to perform |
 
 Contributing
 ============
