@@ -1,7 +1,7 @@
 # Encoding: UTF-8
 #
 # Cookbook Name:: divvy
-# Library:: provider_mapping
+# Library:: helpers_app_windows
 #
 # Copyright 2015-2016, Jonathan Hartman
 #
@@ -18,13 +18,25 @@
 # limitations under the License.
 #
 
-require 'chef/dsl'
-require 'chef/platform/provider_mapping'
-require_relative 'provider_divvy_app'
+require 'chef/mixin/shell_out'
 
-Chef::Platform.set(platform: :mac_os_x,
-                   resource: :divvy_app,
-                   provider: Chef::Provider::DivvyApp::MacOsX::AppStore)
-Chef::Platform.set(platform: :windows,
-                   resource: :divvy_app,
-                   provider: Chef::Provider::DivvyApp::Windows)
+module Divvy
+  module Helpers
+    module App
+      # Helper methods for the Divvy app for Windows.
+      #
+      # @author Jonathan Hartman <j@p4nt5.com>
+      class Windows
+        class << self
+          include Chef::Mixin::ShellOut
+
+          def running?
+            cmd = 'powershell -c "Get-Process Divvy ' \
+                  '-ErrorAction SilentlyContinue"'
+            !shell_out(cmd).stdout.strip.empty?
+          end
+        end
+      end
+    end
+  end
+end
