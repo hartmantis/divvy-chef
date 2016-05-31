@@ -1,8 +1,8 @@
 Divvy Cookbook CHANGELOG
 ========================
 
-Unreleased
-----------
+v1.0.0 (2016-05-31)
+-------------------
 - Update to custom resources, breaking compatibility with Chef < 12.5
 - Update for mac-app-store cookbook 2.0
 
