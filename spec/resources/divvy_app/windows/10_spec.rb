@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require_relative '../../../../libraries/resource_divvy_app_windows'
+require_relative '../../../../libraries/helpers_app_windows'
 
 describe 'resource_divvy_app::windows::10' do
   let(:name) { 'default' }
@@ -17,10 +17,11 @@ describe 'resource_divvy_app::windows::10' do
   let(:converge) { runner.converge('resource_divvy_app_test') }
 
   before(:each) do
-    allow_any_instance_of(Chef::Resource::DivvyAppWindows)
-      .to receive(:shell_out)
-      .with('powershell -c "Get-Process Divvy -ErrorAction SilentlyContinue"')
-      .and_return(double(stdout: running? ? "stuff\n" : "\n"))
+    allow(Kernel).to receive(:load).and_call_original
+    allow(Kernel).to receive(:load)
+      .with(%r{divvy/libraries/helpers_app_windows\.rb}).and_return(true)
+    allow(Divvy::Helpers::App::Windows).to receive(:running?)
+      .and_return(running?)
   end
 
   context 'the :install action' do

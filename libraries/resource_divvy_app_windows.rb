@@ -19,6 +19,7 @@
 #
 
 require 'chef/mixin/shell_out'
+require_relative 'helpers_app_windows'
 require_relative 'resource_divvy_app'
 
 class Chef
@@ -37,8 +38,7 @@ class Chef
       property :running, [TrueClass, FalseClass]
 
       load_current_value do
-        cmd = 'powershell -c "Get-Process Divvy -ErrorAction SilentlyContinue"'
-        running(!shell_out(cmd).stdout.strip.empty?)
+        running(Divvy::Helpers::App::Windows.running?)
       end
 
       action :install do
