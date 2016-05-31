@@ -6,7 +6,7 @@ maintainer_email 'j@p4nt5.com'
 license 'apache2'
 description 'Installs/Configures Divvy'
 long_description 'Installs/Configures Divvy'
-version '1.0.0'
+version '1.0.1'
 
 source_url 'https://github.com/roboticcheese/divvy-chef'
 issues_url 'https://github.com/roboticcheese/divvy-chef/issues'
